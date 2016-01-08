@@ -1,2 +1,6 @@
-#!/bin/sh
-wget -O spaceinfo.json http://status.mainframe.io/api/spaceInfo
+#!/bin/bash
+while true;
+do
+	wget -O spaceinfo.json http://status.mainframe.io/api/spaceInfo
+	sleep 20
+done
