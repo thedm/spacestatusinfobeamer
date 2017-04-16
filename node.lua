@@ -1,6 +1,6 @@
 local json = require "json"
-width=1280
-height=1024
+width=1598
+height=834
 text="Hello World"
 MessageSize=150
 gl.setup(width,height)
@@ -31,19 +31,25 @@ util.file_watch("spaceinfo.json", function(content)
 		if powerUnit == "W" then
 			powerUnit="Watt"
 		end
+	if networkUnits ~= spaceinfo.sensors.network_connections[1].value then
 	networkUnits=spaceinfo.sensors.network_connections[1].value
+	end
+	if numberOfPersonsInSpace ~= spaceinfo.sensors.people_now_present[1].value then
 	numberOfPersonsInSpace=spaceinfo.sensors.people_now_present[1].value
+	end
 	if spaceinfo.sensors.people_now_present[1].names ~= nil then
 	for i,line in ipairs(spaceinfo.sensors.people_now_present[1].names) do
 		if i == 1 then
-		personsInSpace=line;
+		newPersonsInSpace=line;
 		else
-		personsInSpace=personsInSpace .. ", " .. line
+		newPersonsInSpace=newPersonsInSpace .. ", " .. line
 		end
 		print(line)
     	end
 	end
-	
+	if newPersonsInSpace ~= personsInSpace then
+		personsInSpace = newPersonsInSpace
+	end
 	rollText= "momentane Leistungsaufnahme: " .. power .. " " .. powerUnit .. "; " .. networkUnits .. " aktive Netzwerkgeraete; ".. numberOfPersonsInSpace .. " Personen anwesend, namentlich: " .. personsInSpace
 	rollText= "+++" .. rollText .. "+++"
 	rollTextWidth=pixelFont:width(rollText, rollSize)
